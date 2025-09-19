@@ -1,12 +1,522 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tara Setareh</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tara Setareh | Computer Engineer</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* -------------------- NEW THEME (SAGE / BEIGE) -------------------- */
+    :root{
+      /* palette from your reference */
+      --beige-dun:  #C5BEA9;
+      --beige-bone: #E1DBCA;
+      --sage:       #9BA186;
+      --reseda:     #848C67;
+      --ebony:      #5C6249;
+
+      /* map to site tokens */
+      --primary:   var(--reseda);
+      --secondary: var(--sage);
+      --accent:    var(--beige-dun);
+      --dark:      var(--ebony);
+      --light:     var(--beige-bone);
+      --muted:     #6b735f;     /* greenish gray */
+      --card:      #ffffff;
+      --radius:    14px;
+      --shadow:    0 10px 25px rgba(20,24,16,.10);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#1f2937;background:var(--light);line-height:1.65;
+    }
+    img{max-width:100%;display:block}
+
+    /* Layout helpers */
+    .container{width:min(1200px,92%);margin-inline:auto}
+    section{padding:60px 0; scroll-margin-top:90px;}
+    .section-title{ text-align:center; margin-bottom:42px;}
+    .section-title h2{font-size:clamp(26px,2.2vw,34px); color:var(--primary)}
+    .section-title .bar{ width:84px;height:3px;background:var(--secondary); margin:12px auto 0;border-radius:999px; }
+
+    /* Header / Nav */
+    header{ position:sticky; top:0; z-index:50; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 0; }
+    .logo{font-weight:800; color:var(--primary); text-decoration:none; font-size:22px; letter-spacing:.2px}
+    .nav-links{display:flex; gap:28px; list-style:none}
+    .nav-links a{color:var(--dark); text-decoration:none; font-weight:600}
+    .nav-links a:hover{color:var(--primary)}
+    .menu-btn{display:none; cursor:pointer; font-size:22px; color:var(--dark)}
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(135deg, var(--beige-bone) 0%, var(--beige-dun) 55%, var(--sage) 100%);
+      padding:140px 0 96px;
+    }
+    .hero-wrap{ text-align:center; max-width:820px; margin:0 auto;}
+    .avatar{
+      width:168px;height:168px;border-radius:50%;object-fit:cover;
+      margin:0 auto 20px;border:6px solid #fff; box-shadow:var(--shadow);
+      background:#e5e7eb;
+    }
+    .hero h1{font-size:clamp(32px,4vw,54px); color:#1e2320; letter-spacing:.3px}
+    .hero p.lead{font-size:clamp(16px,2.1vw,22px); color:var(--dark); margin-top:8px}
+    .hero-contacts{ margin-top:18px; display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+    .hero-contacts .item{display:flex; align-items:center; gap:8px; color:#1e2320}
+    .social{ margin-top:18px; display:flex; justify-content:center; gap:12px}
+    .social a{
+      width:42px;height:42px; display:inline-grid; place-items:center;
+      background:var(--primary); color:#fff; border-radius:999px; box-shadow:var(--shadow);
+      text-decoration:none;
+    }
+    .social a:hover{transform:translateY(-2px); background:var(--dark)}
+
+    /* Cards / grids */
+    .about-grid{ display:grid; grid-template-columns:1.2fr .9fr; gap:40px; align-items:start; }
+    .card{ background:var(--card); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); }
+    .about h3{color:var(--primary); margin-bottom:10px}
+    .muted{color:var(--muted)}
+    .email-link{ color:#000; text-decoration:none;}
+    .email-link:hover{ color:var(--primary); }
+
+    /* Skills */
+    .skills-grid{ display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+    .skill h4{ color:var(--primary); margin-bottom:12px; text-align:center}
+    .skill ul{list-style:none}
+    .skill li{padding:9px 0; border-bottom:1px solid #eef2f7; display:flex; align-items:center; gap:10px}
+    .skill li:last-child{border-bottom:0}
+    .badge{display:inline-flex; align-items:center; gap:8px}
+
+    /* Timeline */
+    .timeline{ position:relative; max-width:980px; margin:0 auto; }
+    .timeline::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:4px;
+      background:rgba(132,140,103,.25); transform:translateX(-50%); }
+    .t-item{ position:relative; width:50%; padding:22px; border-radius:var(--radius); background:#fff; box-shadow:var(--shadow); margin-bottom:32px; }
+    .t-item.left{ left:0}
+    .t-item.right{ left:50%}
+    .t-item .dot{
+      position:absolute; top:22px; width:16px; height:16px; border-radius:50%;
+      background:#fff; border:4px solid var(--primary); box-shadow:var(--shadow);
+    }
+    .t-item.left .dot{ right:-8px}
+    .t-item.right .dot{ left:-8px}
+    .t-date{ color:var(--secondary); font-weight:700; margin-bottom:6px; display:block}
+
+    /* Projects */
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      gap:22px;
+    }
+    @media (max-width: 1200px){ .projects-grid{ grid-template-columns:repeat(3,1fr);} }
+    @media (max-width: 768px){  .projects-grid{ grid-template-columns:1fr; } }
+
+    .project .title{ color:var(--primary); margin-bottom:8px}
+    .link{ color:var(--primary); font-weight:700; text-decoration:none}
+    .link:hover{ color:var(--dark); text-decoration:underline }
+
+    /* Contact & References */
+    .contact-section .cols{ display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+    .contact-section .info p{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .contact-section a{ color: var(--dark); text-decoration:none; }
+    .contact-section a:hover{ color: var(--primary); text-decoration: underline; }
+
+    .ref{ display:grid; gap:16px}
+    .ref .ref-card{ background:#fff; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .ref .name{ color:var(--primary); font-weight:800; margin-bottom:6px}
+
+    /* Footer */
+    footer{ background:var(--dark); color:#e5e7eb; text-align:center; padding:36px 0}
+    footer .social{ margin-bottom:10px}
+
+    /* Timeline bullets */
+    .t-item ul{ margin:8px 0 0 18px; padding:0; list-style:disc; }
+    .t-item li{ margin-bottom:4px; line-height:1.5; }
+
+    /* Additional projects (3 cards) */
+    #additional-projects .projects-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+    #additional-projects .card.project{ padding:28px; font-size:1.05rem; }
+    @media (max-width:1200px){ #additional-projects .projects-grid{ grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:768px){  #additional-projects .projects-grid{ grid-template-columns:1fr;} }
+
+    /* Responsive tweaks */
+    @media (max-width: 980px){
+      .about-grid{ grid-template-columns:1fr}
+      .timeline::before{ left:28px}
+      .t-item{ width:100%; margin-left:0; padding-left:58px}
+      .t-item.right{ left:0}
+      .t-item .dot{ left:18px}
+    }
+    @media (max-width: 820px){
+      .nav-links{
+        position:fixed; inset:0 0 0 40%; background:var(--primary); flex-direction:column;
+        padding-top:90px; gap:22px; transform:translateX(100%); transition:.25s ease; box-shadow:var(--shadow);
+      }
+      .nav-links a{color:#fff; font-size:18px}
+      .nav-links.open{ transform:translateX(0)}
+      .menu-btn{display:block}
+    }
+    @media (max-width: 640px){
+      .contact-section .cols{ grid-template-columns:1fr}
+      .avatar{width:140px;height:140px}
+    }
+    @media (max-width: 480px){
+      .hero{ padding:100px 0 64px; }
+      .projects .card.project{ padding:22px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, I'm Tara 👋</h1>
-  <p>Welcome to my personal website!</p>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#">Tara.Setareh</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- CV download -->
+        <li><a href="Tara_Setareh_CV.pdf" download target="_blank" rel="noopener">CV</a></li>
+      </ul>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container hero-wrap">
+      <img class="avatar" src="profile.JPG" alt="Tara Setareh"/>
+      <h1>Tara Setareh</h1>
+      <p class="lead">
+        Senior Computer Engineering Student<br>
+        Research Interests: ML, Deep Learning, Computer Vision, 3D Modeling
+      </p>
+
+      <div class="hero-contacts" aria-label="Quick contacts">
+        <div class="item"><i class="fa-solid fa-location-dot"></i><span>Tehran, Iran</span></div>
+        <div class="item"><i class="fa-solid fa-envelope"></i><a href="mailto:tara.setareh8282@gmail.com" class="email-link">tara.setareh8282@gmail.com</a></div>
+      </div>
+
+      <div class="social" aria-label="Social links">
+        <a href="https://github.com/TaraStrh" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="http://linkedin.com/in/tara-setareh-3a40b2248" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>About Me</h2><div class="bar"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="card">
+          <h3>Hello! I'm Tara Setareh</h3>
+          <p>
+            I’m a senior Computer Engineering student at Iran University of Science and Technology (IUST), consistently ranked among Iran’s top industrial universities.
+            GPA: <strong>18.01/20 (3.82/4)</strong>.
+          </p>
+          <p>
+            My academic interests lie in <strong>machine learning, deep learning, and computer vision</strong>, 
+            with a strong motivation to apply AI techniques to <strong>real-world challenges</strong> in areas 
+            such as <strong>industry, healthcare, and biomedical applications</strong>.
+          </p>
+          <p class="muted">
+            I’m passionate about bridging theory and practice—turning research ideas into practical systems 
+            and building reproducible pipelines that make a tangible impact.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Education</h3>
+          <p><strong>B.Sc. Computer Engineering</strong> — Iran University of Science and Technology (IUST)</p>
+          <p>Sept. 2022 – Jan. 2026 (Expected)</p>
+          <p>GPA: 18.01/20 (3.82/4)</p>
+          <hr style="border:none;height:1px;background:#eef2f7;margin:16px 0">
+          <h3>Thesis</h3>
+          <ul>
+            <li>Using Online Machine Learning for Predicting Auto-Scaling in Mobile Edge Computing</li>
+          </ul>
+          <h3 style="margin-top:14px">Key Courses</h3>
+          <ul>
+            <li>Artificial Intelligence (20/20)</li>
+            <li>Fundamentals of Computational Intelligence (19/20)</li>
+            <li>Information Retrieval (16.64/20)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="skills">
+    <div class="container">
+      <div class="section-title">
+        <h2>Technical Skills</h2><div class="bar"></div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="card skill">
+          <h4>Programming</h4>
+          <ul>
+            <li class="badge"><i class="fa-solid fa-code"></i> Python</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> C / C++</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> C# (WPF)</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> MATLAB</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> JavaScript / TypeScript</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> SQL</li>
+          </ul>
+        </div>
+
+        <div class="card skill">
+          <h4>Machine Learning & AI</h4>
+          <ul>
+            <li class="badge"><i class="fa-solid fa-brain"></i> Neural Networks, CNN</li>
+            <li class="badge"><i class="fa-solid fa-diagram-project"></i> Online & Federated Learning</li>
+            <li class="badge"><i class="fa-solid fa-microchip"></i> PyTorch, TensorFlow</li>
+          </ul>
+        </div>
+
+        <div class="card skill">
+          <h4>Web Development</h4>
+          <ul>
+            <li class="badge"><i class="fa-solid fa-laptop-code"></i> HTML / CSS</li>
+            <li class="badge"><i class="fa-brands fa-react"></i> React.js</li>
+            <li class="badge"><i class="fa-solid fa-paintbrush"></i> Material-UI</li>
+            <li class="badge"><i class="fa-solid fa-pen-ruler"></i> Figma</li>
+          </ul>
+        </div>
+
+        <div class="card skill">
+          <h4>Tools & Systems</h4>
+          <ul>
+            <li class="badge"><i class="fa-brands fa-git-alt"></i> Git/GitHub</li>
+            <li class="badge"><i class="fa-solid fa-code"></i> PyCharm</li>
+            <li class="badge"><i class="fa-solid fa-microchip"></i> Xilinx ISE, Proteus</li>
+            <li class="badge"><i class="fa-solid fa-cloud"></i> Cloud/Mobile Edge Computing, IoT Design</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="experience">
+    <div class="container">
+      <div class="section-title">
+        <h2>Experience & Awards</h2><div class="bar"></div>
+      </div>
+
+      <div class="timeline">
+        <div class="t-item left">
+          <span class="dot"></span>
+          <span class="t-date">2023 – Present</span>
+          <h3>Undergraduate Research Assistant — IUST</h3>
+          <ul>
+            <li>Developed online ML & federated learning algorithms for auto-scaling in MEC</li>
+            <li>Designed resource optimization strategies</li>
+            <li>Surveyed distributed learning trends</li>
+          </ul>
+        </div>
+
+        <div class="t-item right">
+          <span class="dot"></span>
+          <span class="t-date">Spring 2023 – Spring 2025</span>
+          <h3>Undergraduate Teaching Assistant — IUST</h3>
+          <ul>
+            <li>Discrete Mathematics</li>
+            <li>Logic Circuits</li>
+            <li>Computer Architecture</li>
+            <li>Designing Digital Computer Systems</li>
+            <li>Data Structures</li>
+            <li>Design Analysis & Algorithms</li>
+            <li>Theory of Language & Automata</li>
+          </ul>
+        </div>
+
+        <div class="t-item left">
+          <span class="dot"></span>
+          <span class="t-date">2021 • 2024 • 2025</span>
+          <h3>Honors & Awards</h3>
+          <ul>
+            <li>Top 2% among 142,000 in National University Entrance Exam</li>
+            <li>Honorary member of CE Scientific Association</li>
+            <li>Top 20 in B.Sc. CE at IUST</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="projects">
+    <div class="container">
+      <div class="section-title">
+        <h2>Research Projects</h2><div class="bar"></div>
+      </div>
+
+      <div class="projects-grid">
+        <div class="card project">
+          <h3 class="title">Using Online ML for Predicting Auto-Scaling in MEC</h3>
+          <p>Real-time ML for auto-scaling in mobile edge computing, reducing resource waste and improving reliability.</p>
+          <a class="link" href="https://github.com/TaraStrh/online-machine-learning" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card project">
+          <h3 class="title">Self-Supervised Clustering of Medical X-Ray Images</h3>
+          <p>EfficientNet features + KMeans for chest X-ray grouping without labels.</p>
+          <a class="link" href="https://github.com/TaraStrh/EfficientNet-Cluster" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card project">
+          <h3 class="title">TF-IDF-Based Text Representation & Clustering</h3>
+          <p>TF-IDF pipeline for representation, dimensionality reduction, and pattern extraction.</p>
+          <a class="link" href="https://github.com/TaraStrh/TF-IDF" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card project">
+          <h3 class="title">Drug–Target Interaction Prediction with ML/DL</h3>
+          <p>Models with SVM, Random Forest, and deep learning (MLP, GNN, GCN) for DTI prediction.</p>
+          <a class="link" href="https://github.com/TaraStrh/Computational-Intelligence/tree/final-ci" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card project">
+          <h3 class="title">Information Retrieval via Web Scraping & NLP</h3>
+          <p>IR pipeline by crawling & preprocessing Reddit posts for effective news search and retrieval.</p>
+          <a class="link" href="https://github.com/TaraStrh/Information_Retrieval-/tree/finalproject" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Projects -->
+    <section id="additional-projects" class="projects">
+      <div class="container">
+        <div class="section-title">
+          <h2>Additional Projects</h2><div class="bar"></div>
+        </div>
+
+        <div class="projects-grid">
+          <div class="card project">
+            <h3 class="title">Polaris Network Quality Monitoring System</h3>
+            <p>
+              Developed an Android client and a web-based server to monitor mobile network KPIs 
+              (e.g., RSRP, RSRQ, ping, throughput). Designed data collection, MySQL integration, 
+              and web UI for visualization.
+            </p>
+            <a class="link" href="https://github.com/A-PolarisProject" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+
+          <div class="card project">
+            <h3 class="title">Full-Stack Web Platform for Restaurant & Café Discovery and Reservation</h3>
+            <p>
+              Built a web app for browsing, filtering, and reserving cafés/restaurants with features 
+              like menu display, reviews, feedback, and reservation tracking.
+            </p>
+            <a class="link" href="https://github.com/synapse-organization" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+
+          <div class="card project">
+            <h3 class="title">Online Resume Builder Web Application</h3>
+            <p>
+              Developed a responsive and customizable resume-building platform allowing users 
+              to design, preview, and export professional resumes.
+            </p>
+            <a class="link" href="https://github.com/LegoTech-SE" target="_blank" rel="noreferrer">View Project <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- Publications -->
+  <section class="publications">
+    <div class="container">
+      <div class="section-title">
+        <h2>Publications & Writing</h2><div class="bar"></div>
+      </div>
+      <div class="card">
+        <p>• T. Setareh, M. Ashtiani. <em>Using Online Machine Learning for Predicting Auto-Scaling in Mobile Edge Computing</em>. Manuscript in Preparation, 2025.</p>
+        <p>• <em>Self-Supervised Clustering of Medical Images Using EfficientNet and KMeans</em>. Medium, 2024. <a class="link" href="https://medium.com/@tara.setareh8282/self-supervised-clustering-of-medical-images-using-efficientnet-and-kmeans-1044d7440b8b" target="_blank" rel="noreferrer">[link]</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & References -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact & References</h2><div class="bar"></div>
+      </div>
+
+      <div class="cols">
+        <div class="card info">
+          <h3 style="color:var(--primary); margin-bottom:10px">Get In Touch</h3>
+          <p><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> Tehran, Iran</p>
+          <p><i class="fa-solid fa-envelope" style="color:var(--primary)"></i> <a href="mailto:tara.setareh8282@gmail.com">tara.setareh8282@gmail.com</a></p>
+          <p><i class="fa-brands fa-github" style="color:var(--primary)"></i> <a href="https://github.com/TaraStrh" target="_blank">github.com/TaraStrh</a></p>
+          <p><i class="fa-brands fa-linkedin" style="color:var(--primary)"></i> <a href="http://linkedin.com/in/tara-setareh-3a40b2248" target="_blank">linkedin.com/in/tara-setareh-3a40b2248</a></p>
+        </div>
+
+        <div class="ref">
+          <div class="ref-card">
+            <div class="name">Dr. Mehrdad Ashtiani</div>
+            <div class="muted">Assistant Professor, Department of Computer Engineering, IUST</div>
+            <div><a href="mailto:m_ashtiani@iust.ac.ir">m_ashtiani@iust.ac.ir</a></div>
+          </div>
+          <div class="ref-card">
+            <div class="name">Dr. Hakem Beitollahi</div>
+            <div class="muted">Assistant Professor, Department of Computer Engineering, IUST</div>
+            <div><a href="mailto:Beitollahi@iust.ac.ir">Beitollahi@iust.ac.ir</a></div>
+          </div>
+          <div class="ref-card">
+            <div class="name">Dr. Farzaneh Baghbani</div>
+            <div class="muted">Assistant Professor, Department of Computer Engineering, IUST</div>
+            <div><a href="mailto:farzane.ghayour@gmail.com">farzane.ghayour@gmail.com</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="social">
+        <a href="https://github.com/TaraStrh" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="http://linkedin.com/in/tara-setareh-3a40b2248" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+      <p>&copy; <span id="year"></span> Tara Setareh. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      menuBtn.innerHTML =
+        navLinks.classList.contains('open')
+          ? '<i class="fa-solid fa-xmark"></i>'
+          : '<i class="fa-solid fa-bars"></i>';
+    });
+    navLinks.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click', ()=> navLinks.classList.remove('open'));
+    });
+
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
